@@ -5,6 +5,18 @@
 > the relevant section (structure, conventions, decisions) when it changes.
 > Owner: Chibesa Mumbi.
 
+## ⚠️ Remind Chibesa at launch
+
+**When we resume for launch/deploy, surface this first:** the `.env` files stay
+local by design and are git-ignored — they are NOT in the repo. So on any new
+machine or when deploying to Vercel, the environment variables must be
+**re-entered in the Vercel dashboard** (not pulled from GitHub). This is the
+intended, secure behaviour. Vars to set at launch (server-only unless `VITE_`):
+`VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY`, `VITE_FLW_PUBLIC_KEY`,
+`FLW_SECRET_KEY`, `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`,
+`ANTHROPIC_API_KEY`. Also run the SQL migrations and enter real rate-card prices.
+(See `docs/SECURITY.md` and `DEPLOY_VERCEL.md`.)
+
 ## What this is
 
 The MTV platform application layer: a public marketing site, an admin dashboard,
