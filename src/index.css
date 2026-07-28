@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-ink-900 text-sand-100 font-sans antialiased;
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Minimal backdrop: one very faint top vignette, no aurora, no grid.
+     Restraint is the whole point — the black does the work. */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(80rem 50rem at 50% -20%, rgba(255, 255, 255, 0.045), transparent 70%);
+    pointer-events: none;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background: rgba(255, 255, 255, 0.85);
+    color: #000;
+  }
+
+  /* Slim monochrome scrollbar */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: #000; }
+  ::-webkit-scrollbar-thumb {
+    background: #2e2e2e;
+    border-radius: 0;
+    border: 3px solid #000;
+  }
+  ::-webkit-scrollbar-thumb:hover { background: #4a4a4a; }
+}
+
+@layer components {
+  /* Primary = solid white, black text, uppercase + tracked (SpaceX button). */
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center gap-2 rounded-sm px-6 py-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-ink-900 transition-all duration-200 disabled:opacity-50;
+    background: #ffffff;
+    border: 1px solid #ffffff;
+  }
+  .btn-primary:hover {
+    background: rgba(255, 255, 255, 0.85);
+    border-color: rgba(255, 255, 255, 0.85);
+  }
+
+  /* Ghost = transparent, hairline border, fills on hover. */
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-sm border px-6 py-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-sand-100 transition-all duration-200;
+    border-color: rgba(255, 255, 255, 0.30);
+    background: transparent;
+  }
+  .btn-ghost:hover {
+    border-color: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  /* Flat card: hairline border, near-black fill, no blur, no glow. */
+  .card {
+    @apply rounded-lg p-6 transition-all duration-200;
+    background: #0a0a0a;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+  }
+  .card:hover {
+    border-color: rgba(255, 255, 255, 0.28);
+  }
+
+  .field {
+    @apply w-full rounded-sm px-3.5 py-2.5 text-sm text-sand-100 placeholder-sand-500 outline-none transition;
+    background: #0a0a0a;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+  }
+  .field:focus {
+    border-color: rgba(255, 255, 255, 0.85);
+  }
+
+  .label {
+    @apply mb-1.5 block text-xs font-semibold uppercase tracking-wide text-sand-400;
+  }
+
+  /* Kicker: quiet mono label. No glow. */
+  .kicker {
+    @apply font-mono text-xs uppercase tracking-[0.28em] text-sand-400;
+  }
+}
+
+@layer utilities {
+  .glass {
+    background: #0a0a0a;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+  }
+  /* Was a cyan→violet gradient; now solid white so headlines read as
+     confident, not decorative. Markup using .gradient-text needs no change. */
+  .gradient-text {
+    color: #ffffff;
+  }
+  .glow-cyan { box-shadow: none; }
+  .glow-violet { box-shadow: none; }
+  .text-glow { text-shadow: none; }
+  .reveal { animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+  .hairline { border-color: rgba(255, 255, 255, 0.10); }
+}
