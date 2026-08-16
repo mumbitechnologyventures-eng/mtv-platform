@@ -6,6 +6,7 @@ import Logo from '../components/Logo.jsx'
 import { Badge } from '../components/ui.jsx'
 import { PROJECT_STAGES } from '../lib/pipeline.js'
 import { fmtK } from '../lib/metrics.js'
+import ProjectThread from '../components/ProjectThread.jsx'
 
 const STAGE_HINT = {
   agreement: 'Agreement being prepared',
@@ -134,6 +135,13 @@ export default function ClientPortal() {
                       </ul>
                     )}
                   </div>
+
+                  <ProjectThread
+                    project={p}
+                    role="client"
+                    userId={user?.id}
+                    userName={profile?.name || user?.email}
+                  />
                 </div>
               )
             })}

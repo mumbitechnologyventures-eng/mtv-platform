@@ -41,7 +41,27 @@ export function AuthProvider({ children }) {
     isAdmin: !!profile?.is_admin,
     loading,
     signIn: (email, password) => supabase.auth.signInWithPassword({ email, password }),
+    signUp: (email, password, name) =>
+      supabase.auth.signUp({ email, password, options: { data: { name } } }),
     signOut: () => supabase.auth.signOut(),
+    // Sends a reset link; the user lands on /reset-password to set a new password.
+    resetPassword: (email) =>
+      supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: `${window.location.origin}/reset-password`,
+      }),
+    updatePassword: (password) => supabase.auth.updateUser({ password }),
+    // Passwordless: emails a one-time login link.
+    signInWithMagicLink: (email) =>
+      supabase.auth.signInWithOtp({
+        email,
+        options: { emailRedirectTo: `${window.location.origin}/login` },
+      }),
+    // OAuth: needs the Google provider enabled in Supabase to work.
+    signInWithGoogle: () =>
+      supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: { redirectTo: `${window.location.origin}/login` },
+      }),
   }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

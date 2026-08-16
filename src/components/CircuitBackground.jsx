@@ -15,6 +15,13 @@ export default function CircuitBackground() {
     if (!canvas) return
     const ctx = canvas.getContext('2d')
 
+    // Recolour with the theme: dark traces on a light page, light on dark.
+    const themeRGB = () =>
+      document.documentElement.getAttribute('data-theme') === 'light' ? '30,27,24' : '255,255,255'
+    let rgb = themeRGB()
+    const onTheme = () => { rgb = themeRGB() }
+    window.addEventListener('themechange', onTheme)
+
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
 
@@ -52,7 +59,7 @@ export default function CircuitBackground() {
       ctx.moveTo(a.x, a.y)
       ctx.lineTo(midX, a.y)
       ctx.lineTo(midX, b.y)
-      ctx.strokeStyle = `rgba(255,255,255,${alpha})`
+      ctx.strokeStyle = `rgba(${rgb},${alpha})`
       ctx.stroke()
     }
 
@@ -96,15 +103,15 @@ export default function CircuitBackground() {
         const breathe = reduce ? 0 : Math.sin(n.pulse) * 0.15
         const a = Math.min(0.9, 0.14 + near * 0.7 + breathe)
         const s = 1.4 + near * 2.2
-        ctx.fillStyle = `rgba(255,255,255,${a})`
+        ctx.fillStyle = `rgba(${rgb},${a})`
         ctx.fillRect(n.x - s / 2, n.y - s / 2, s, s)
       }
 
       // soft cursor light
       if (pointer.active) {
         const g = ctx.createRadialGradient(pointer.x, pointer.y, 0, pointer.x, pointer.y, GLOW)
-        g.addColorStop(0, 'rgba(255,255,255,0.05)')
-        g.addColorStop(1, 'rgba(255,255,255,0)')
+        g.addColorStop(0, `rgba(${rgb},0.05)`)
+        g.addColorStop(1, `rgba(${rgb},0)`)
         ctx.fillStyle = g
         ctx.fillRect(pointer.x - GLOW, pointer.y - GLOW, GLOW * 2, GLOW * 2)
       }
@@ -140,6 +147,7 @@ export default function CircuitBackground() {
 
     return () => {
       cancelAnimationFrame(raf)
+      window.removeEventListener('themechange', onTheme)
       window.removeEventListener('mousemove', onMove)
       window.removeEventListener('mouseout', onLeave)
       window.removeEventListener('resize', onResize)

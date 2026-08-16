@@ -5,7 +5,7 @@ import { unitPrice, computeTotals, money, makeQuoteRef, priceLabel, depositOf, D
 import { draftFromDescription } from '../lib/quoteDraft.js'
 import { STEPS, STEP_LABELS, assistantMessage, suggestedQuestions, answer } from '../lib/assistant.js'
 
-const NGO_PCT = 35
+const NGO_PCT = 10
 
 export default function Start() {
   const [pricing, setPricing] = useState([])
@@ -203,7 +203,7 @@ function Stepper({ stepIdx, onJump }) {
               : 'border-ink-600 text-sand-500'
             }`}>
             <span className={`flex h-5 w-5 items-center justify-center rounded-full text-[10px] ${
-              active || done ? 'bg-white text-ink-900' : 'bg-ink-700 text-sand-400'
+              active || done ? 'bg-clay text-ink-900' : 'bg-ink-700 text-sand-400'
             }`}>{done ? '✓' : i + 1}</span>
             {STEP_LABELS[s]}
           </button>
@@ -261,7 +261,7 @@ function ReviewStep({
               <div className="flex overflow-hidden rounded-sm border border-ink-600 text-xs">
                 {['ZMW', 'USD'].map((c) => (
                   <button key={c} onClick={() => setCurrency(c)}
-                    className={`px-3 py-1.5 ${currency === c ? 'bg-white text-ink-900' : 'text-sand-300 hover:bg-ink-700'}`}>{c}</button>
+                    className={`px-3 py-1.5 ${currency === c ? 'bg-clay text-ink-900' : 'text-sand-300 hover:bg-ink-700'}`}>{c}</button>
                 ))}
               </div>
             )}
@@ -321,7 +321,7 @@ function ReviewStep({
                       <p className="mt-1 font-semibold text-sand-100">{row.name}</p>
                     </div>
                     <span className={`mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-md border text-xs ${
-                      on ? 'border-white bg-white text-ink-900' : 'border-ink-600 text-transparent'
+                      on ? 'border-white bg-clay text-ink-900' : 'border-ink-600 text-transparent'
                     }`}>✓</span>
                   </div>
                   {(row.short_desc || row.description) && (
@@ -418,7 +418,7 @@ function Assistant({ step, ctx }) {
     <aside className="lg:sticky lg:top-24 lg:h-fit">
       <div className="card">
         <div className="flex items-center gap-2">
-          <span className="flex h-7 w-7 items-center justify-center rounded-sm bg-white text-xs font-black text-ink-900">AI</span>
+          <span className="flex h-7 w-7 items-center justify-center rounded-sm bg-clay text-xs font-black text-ink-900">AI</span>
           <p className="text-sm font-semibold">Assistant</p>
           <button onClick={() => setOpen((v) => !v)} className="ml-auto text-xs text-sand-500 lg:hidden">
             {open ? 'Hide' : 'Show'}

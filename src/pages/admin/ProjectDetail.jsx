@@ -3,6 +3,8 @@ import { useParams, Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../../lib/supabase.js'
 import { Badge, Empty } from '../../components/ui.jsx'
 import { PROJECT_STAGES, DOC_TYPES, DOC_STATUSES, nextStage } from '../../lib/pipeline.js'
+import { useAuth } from '../../context/AuthContext.jsx'
+import ProjectThread from '../../components/ProjectThread.jsx'
 
 export default function ProjectDetail() {
   const { id } = useParams()
@@ -11,6 +13,7 @@ export default function ProjectDetail() {
   const [docs, setDocs] = useState([])
   const [loading, setLoading] = useState(true)
   const [newDocType, setNewDocType] = useState('agreement')
+  const { user, profile } = useAuth()
 
   async function load() {
     setLoading(true)
@@ -146,6 +149,11 @@ export default function ProjectDetail() {
             ))}
           </div>
         )}
+      </div>
+
+      {/* Messages + review */}
+      <div className="card mt-8">
+        <ProjectThread project={project} role="admin" userId={user?.id} userName={profile?.name || 'Builder'} />
       </div>
 
       <div className="mt-10 border-t border-ink-600 pt-6">

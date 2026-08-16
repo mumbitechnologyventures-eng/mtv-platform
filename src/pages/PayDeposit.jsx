@@ -18,8 +18,8 @@ export default function PayDeposit() {
   const [error, setError] = useState('')
 
   useEffect(() => {
-    supabase.from('quotes').select('*').eq('ref', ref).maybeSingle().then(({ data }) => {
-      setQuote(data || null)
+    supabase.rpc('get_quote_by_ref', { p_ref: ref }).then(({ data }) => {
+      setQuote((Array.isArray(data) ? data[0] : data) || null)
       setLoading(false)
     })
   }, [ref])

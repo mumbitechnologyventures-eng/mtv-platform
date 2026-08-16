@@ -4,7 +4,7 @@ import { PageHead, Empty } from '../../components/ui.jsx'
 
 const TIERS = ['from', 'quote', 'hourly', 'monthly', 'per_page', 'per_document']
 const BLANK = {
-  category: '', name: '', tier: 'from', zmw_price: 0, ngo_discount: 35,
+  category: '', name: '', tier: 'from', zmw_price: 0, ngo_discount: 10,
   timeline: '', description: '', includes: [], is_primary: false, active: true, sort_order: 0,
 }
 

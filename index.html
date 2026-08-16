@@ -7,6 +7,16 @@
     <meta name="theme-color" content="#05060f" />
     <meta name="description" content="Mumbi Technology Ventures — practical software, websites, cloud, data and AI. Fixed, all-in pricing. Lusaka, Zambia, serving clients worldwide." />
     <title>Mumbi Technology Ventures</title>
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('mtv-theme') || 'dark';
+          document.documentElement.setAttribute('data-theme', t);
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />

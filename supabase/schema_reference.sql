@@ -108,7 +108,7 @@ create table if not exists public.pricing (
   includes     jsonb default '[]'::jsonb,
   sort_order   integer default 0,
   active       boolean default true,
-  ngo_discount integer default 35,
+  ngo_discount integer default 10,
   is_primary   boolean not null default false,
   subtitle     text,
   short_desc   text,

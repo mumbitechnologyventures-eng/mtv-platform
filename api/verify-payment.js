@@ -4,7 +4,7 @@
 //
 // Required env vars (server-side, NOT prefixed with VITE_):
 //   FLW_SECRET_KEY              Flutterwave secret key
-//   SUPABASE_URL                e.g. https://fqqcxznrrtastywwcgyv.supabase.co
+//   SUPABASE_URL                e.g. https://fbgkawricmthukaoxqco.supabase.co
 //   SUPABASE_SERVICE_ROLE_KEY   Supabase service-role key (bypasses RLS)
 
 export default async function handler(req, res) {

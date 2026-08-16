@@ -72,9 +72,23 @@ app that talks to it.
   Chibesa's machine did not have Node as of 2026-07-24 — installing it is the
   gate for `npm run dev` / `start-prototype.bat`. Vercel builds don't need local Node.
 
+## Accounts & remotes (current)
+
+- **GitHub:** all MTV projects live under the **`mumbitechnologyventures-eng`**
+  account (work email `mumbitechnologyventures@gmail.com`). Push new projects
+  there. The old `chibesa240` account is being retired. This repo's remote is
+  `https://github.com/mumbitechnologyventures-eng/mtv-platform.git`.
+- **Supabase (CURRENT as of 2026-08-05):** the app points at project
+  **`iqxowwfltefmlnxvctfe`** (`https://iqxowwfltefmlnxvctfe.supabase.co`), a new
+  org linked to `chibesamumbi21@gmail.com` and connected to Claude's Supabase
+  connector. Full schema, signup trigger, admin account, real prices, and all
+  new tables are already applied here. **Earlier project refs are all stale — do
+  NOT use them:** `mgoiqsxrzqymyozyfeid`, `fbgkawricmthukaoxqco`,
+  `fqqcxznrrtastywwcgyv`. Publishable (anon) key in `.env` is `sb_publishable_CUM6…`.
+
 ## Supabase
 
-- Project URL: `https://fqqcxznrrtastywwcgyv.supabase.co`
+- Project URL: `https://iqxowwfltefmlnxvctfe.supabase.co` (see Accounts above)
 - Keep RLS on. Anon key + RLS is what protects data.
 
 ## Voice & tone
@@ -84,6 +98,58 @@ app that talks to it.
   the assistant's system voice and when writing any client-facing text.
 
 ## Changelog
+
+### 2026-08-05 (MILESTONE — launch-ready: new DB, real prices, theme, messaging, security)
+Big session. Current phase: **code launch-ready and verified; not yet deployed.**
+- **New Supabase project** `iqxowwfltefmlnxvctfe` (see Accounts). Applied full
+  schema + signup trigger (fixed the ordering bug where `is_admin()` referenced
+  `profiles` before it existed), seeded content, and created the sole admin
+  (`chibesamumbi21@gmail.com`). `.env` + `.env.example` repointed here.
+- **Real prices loaded (23 services)** from Chibesa's catalogue into `pricing`
+  (Website/Booking/E-commerce/Trading/Consulting/Maintenance/Documents/Premium/
+  Custom/Dashboards). Every service has a description + accurate "what's included"
+  (only bundled items, plus "direct communication with the builder" and "leave a
+  review when done"). NGO discount set to **0** (Chibesa did not specify one — do
+  not invent; the pricing-page NGO toggle is hidden until a real discount is set).
+- **Homepage copy** loaded into `site_content` (39 rows): hero, what-we-solve,
+  how-we-work, new **who-we-work-with** section, guarantees, security, CTA, footer.
+- **Modern login** (`Login.jsx`): email/password + show-password toggle, forgot
+  password, magic link, Google button. New `/reset-password` page + AuthContext
+  helpers. "Log in" now in Nav (top-right) + footer.
+- **Client ↔ builder messaging + reviews**: new `project_messages` and `reviews`
+  tables + RLS; `ProjectThread.jsx` used in ClientPortal (client) and
+  ProjectDetail (admin). Reviews are moderated (approved=false until admin OKs),
+  approved ones are public (testimonial-ready). Also **fixed** missing client RLS
+  on `projects`/`project_docs` (clients previously couldn't see their own projects).
+- **Light/dark theme**: palette moved to CSS variables (`:root` dark default,
+  `[data-theme="light"]` override) driven by one toggle (`ThemeToggle.jsx` in Nav);
+  no-flash init in `index.html`; CircuitBackground recolours per theme; solid
+  `bg-white` brand marks converted to `bg-clay` so they stay visible. Warm hero
+  illustration accents added. NOTE: Tailwind config change requires a dev-server
+  restart to take effect (stale HMR shows a broken half-themed page).
+- **Exchange rates** seeded: ZMW + USD at ~18.83 ZMW/USD (`rate_from_zmw` 0.0531);
+  editable in `/admin` → Rates. USD price = ZMW × 0.0531.
+- **Security hardening**: fixed a privilege-escalation hole (any signed-in user
+  could set their own `is_admin`) via a `prevent_self_admin` trigger; closed an
+  open read on `quotes` (anon could read all) — now a `get_quote_by_ref` RPC and
+  `PayDeposit` uses it; revoked API execute on trigger-only functions. Supabase
+  security advisors clean except two dashboard toggles (leaked-password protection;
+  optional bot protection on public forms).
+- **Perf**: route-based code-splitting (was one 916 kB bundle → ~200 kB initial;
+  charts load only in admin) + vendor chunk split + ErrorBoundary.
+- **Verified**: `npm run build` clean (28 chunks); full order lifecycle tested at
+  the DB layer with simulated roles (anon → client → admin → server), 13/13 steps
+  incl. isolation, messaging both ways, review + approval. All link/button targets
+  resolve.
+- **Costs to launch** (researched 2026-08-05): ~$20–25/mo (Vercel Pro $20 for
+  commercial use + a few $ Anthropic; Supabase free tier) + ~$30 one-time (PACRA
+  business name ~K333 + `.com` ~$12). Rock-bottom test path ~$0/mo on Vercel Hobby
+  (non-commercial only). PACRA is not a technical launch blocker but is needed to
+  receive payments (Flutterwave KYC) and to trade legally under the name.
+- **STILL PENDING (not code):** commit (sandbox git had a lock — commit from the
+  machine/github.dev), set Vercel env vars + redeploy, register PACRA + buy domain,
+  configure Google OAuth + email SMTP for magic-link/reset in production, enable
+  leaked-password protection.
 
 ### 2026-07-28 (admin approval gate + price override)
 - Quotes are now DRAFTS until the admin approves them. `RequestsAdmin.jsx`:

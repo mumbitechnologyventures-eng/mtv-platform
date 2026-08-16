@@ -3,7 +3,7 @@ import { ask, SUGGESTIONS, MAX_INPUT, messagesLeft } from '../lib/chat.js'
 
 const GREETING = {
   role: 'assistant',
-  content: 'Hi — I\'m the MTV assistant. Ask about services, pricing, or getting started.',
+  content: 'Hi, welcome to Mumbi Technology Ventures. I\'m here to help — ask me about our services, pricing, or how to get started, and I\'ll point you the right way.',
 }
 
 export default function ChatWidget() {
@@ -64,7 +64,7 @@ export default function ChatWidget() {
       {open && (
         <div className="fixed bottom-20 right-5 z-50 flex h-[30rem] w-[22rem] max-w-[calc(100vw-2.5rem)] flex-col overflow-hidden rounded-lg border border-white/15 bg-ink-900/95 backdrop-blur-xl">
           <div className="flex items-center gap-2 border-b border-white/10 px-4 py-3">
-            <span className="flex h-6 w-6 items-center justify-center rounded-sm bg-white text-[10px] font-black text-ink-900">M</span>
+            <span className="flex h-6 w-6 items-center justify-center rounded-sm bg-clay text-[10px] font-black text-ink-900">M</span>
             <div className="leading-tight">
               <p className="text-sm font-semibold text-sand-100">MTV Assistant</p>
               <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-sand-500">Ask about our work</p>
@@ -77,7 +77,7 @@ export default function ChatWidget() {
                 <div
                   className={`max-w-[85%] rounded-lg px-3 py-2 text-sm leading-relaxed ${
                     m.role === 'user'
-                      ? 'bg-white text-ink-900'
+                      ? 'bg-clay text-ink-900'
                       : 'border border-white/10 bg-ink-800 text-sand-200'
                   }`}
                 >

@@ -13,6 +13,7 @@ export default function Home() {
   const badItems = toLines(c.problem_bad)
   const goodItems = toLines(c.problem_good)
   const processSteps = toPairs(c.process_steps)
+  const audience = toPairs(c.audience_items)
   const guarantees = toPairs(c.guarantees)
   const security = toPairs(c.security_items)
 
@@ -21,7 +22,16 @@ export default function Home() {
       {/* Hero */}
       <div className="relative overflow-hidden">
         <Section className="relative pt-24 pb-20 md:pt-40 md:pb-32">
-          <div className="max-w-4xl">
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+            <div className="absolute -right-20 -top-16 h-80 w-80 rounded-full blur-2xl" style={{ background: 'radial-gradient(closest-side, rgba(234,159,39,0.12), transparent)' }} />
+            <div className="absolute left-0 top-52 h-72 w-72 rounded-full blur-2xl" style={{ background: 'radial-gradient(closest-side, rgba(93,202,165,0.10), transparent)' }} />
+            <svg className="absolute right-4 top-8 opacity-[0.12]" width="240" height="240" viewBox="0 0 240 240" fill="none" stroke="rgb(var(--line))" strokeWidth="1">
+              <circle cx="120" cy="120" r="45" />
+              <circle cx="120" cy="120" r="78" />
+              <circle cx="120" cy="120" r="111" />
+            </svg>
+          </div>
+          <div className="relative z-10 max-w-4xl">
             {c.hero_eyebrow && (
               <span className="reveal inline-flex items-center gap-2.5 font-mono text-xs uppercase tracking-[0.28em] text-sand-400">
                 <span className="h-1.5 w-1.5 rounded-full bg-clay" />
@@ -113,6 +123,23 @@ export default function Home() {
           ))}
         </div>
       </Section>
+
+      {/* Who we work with */}
+      {audience.length > 0 && (
+        <Section className="py-16 md:py-20">
+          <p className="kicker">{c.audience_kicker || 'Who we work with'}</p>
+          <h2 className="mt-2 max-w-2xl text-3xl font-bold md:text-4xl">{c.audience_title}</h2>
+          <p className="mt-3 max-w-2xl text-sand-400">{c.audience_sub}</p>
+          <div className="mt-8 grid gap-5 sm:grid-cols-2">
+            {audience.map((a) => (
+              <div key={a.title} className="card">
+                <p className="font-semibold">{a.title}</p>
+                <p className="mt-1.5 text-sm text-sand-400">{a.desc}</p>
+              </div>
+            ))}
+          </div>
+        </Section>
+      )}
 
       {/* Guarantees */}
       {guarantees.length > 0 && (

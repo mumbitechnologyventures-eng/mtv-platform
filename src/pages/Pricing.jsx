@@ -85,12 +85,14 @@ export default function Pricing() {
               </div>
             </div>
 
-            <label className="flex cursor-pointer items-center gap-2.5 rounded-lg border border-ink-600 bg-ink-900 px-3 py-1.5">
-              <input type="checkbox" checked={ngo} onChange={(e) => setNgo(e.target.checked)} className="accent-clay" />
-              <span className="text-sm text-sand-200">
-                {c.pricing_tier_ngo || 'NGO / Non-profit — 35% off'}
-              </span>
-            </label>
+            {items.some((i) => Number(i.ngo_discount) > 0) && (
+              <label className="flex cursor-pointer items-center gap-2.5 rounded-lg border border-ink-600 bg-ink-900 px-3 py-1.5">
+                <input type="checkbox" checked={ngo} onChange={(e) => setNgo(e.target.checked)} className="accent-clay" />
+                <span className="text-sm text-sand-200">
+                  {c.pricing_tier_ngo || 'NGO / Non-profit discount'}
+                </span>
+              </label>
+            )}
           </div>
         </div>
       </div>

@@ -28,7 +28,7 @@ export default function AdminLayout() {
       <aside className="glass border-b border-white/5 md:w-60 md:flex-none md:border-b-0 md:border-r md:border-white/5">
         <div className="flex items-center justify-between px-5 py-4">
           <Link to="/" className="flex items-center gap-2">
-            <span className="flex h-7 w-7 items-center justify-center rounded-sm bg-white text-sm font-black text-ink-900">M</span>
+            <span className="flex h-7 w-7 items-center justify-center rounded-sm bg-clay text-sm font-black text-ink-900">M</span>
             <span className="text-sm font-semibold">MTV Admin</span>
           </Link>
         </div>
